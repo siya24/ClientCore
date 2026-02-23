@@ -1,0 +1,88 @@
+@using ClientCore.UI.ViewModels
+@model ClientDetailsViewModel
+
+@{
+    ViewData["Title"] = "Client Details";
+}
+
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header">
+            <h4>Client Details</h4>
+        </div>
+        <div class="card-body">
+
+            <ul class="nav nav-tabs" id="clientTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="client-tab" data-bs-toggle="tab" data-bs-target="#client" type="button" role="tab" aria-controls="client" aria-selected="true">General</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="contacts-tab" data-bs-toggle="tab" data-bs-target="#contacts" type="button" role="tab" aria-controls="contacts" aria-selected="false">
+                        Contacts
+                        @if (Model.Contacts.Any())
+                        {
+                            <span class="badge bg-primary">@Model.Contacts.Count</span>
+                        }
+                    </button>
+                </li>
+            </ul>
+
+
+            <div class="tab-content mt-3" id="clientTabsContent">
+
+                <div class="tab-pane fade show active" id="client" role="tabpanel" aria-labelledby="client-tab">
+                    <dl class="row">
+                        <dt class="col-sm-3 text-left">@Html.DisplayNameFor(model => model.Client.Name)</dt>
+                        <dd class="col-sm-9 text-left">@Html.DisplayFor(model => model.Client.Name)</dd>
+                        <dt class="col-sm-3 text-left">@Html.DisplayNameFor(model => model.Client.Code)</dt>
+                        <dd class="col-sm-9 text-left">@Html.DisplayFor(model => model.Client.Code)</dd>
+                    </dl>
+                </div>
+
+
+                <div class="tab-pane fade" id="contacts" role="tabpanel" aria-labelledby="contacts-tab">
+                    <div class="row">
+                        <div class="col-12">
+                            @if (Model.Contacts.Any())
+                            {
+                                <table class="table table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th class ="text-left">Name</th>
+                                            <th class="text-left">Email</th>
+                                            <th class="text-left">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var contact in Model.Contacts)
+                                        {
+                                            <tr>
+                                                <td class="text-left">@contact.FullName</td>
+                                                <td class="text-left">@contact.Email</td>
+                                                <td class="text-left">
+                                                    <a href="#" class="btn btn-sm btn-info">View</a>
+                                                    <a href="#" class="btn btn-sm btn-warning">Edit</a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            }
+                            else
+                            {
+                                <div class="alert alert-info">
+                                    No contact(s) found.
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a asp-action="Edit" asp-route-id="@Model.Client.Id" class="btn btn-warning">Edit</a>
+            <a asp-action="Index" class="btn btn-secondary">Back to list</a>
+            <a asp-action="LinkContact" asp-controller="Clients" asp-route-id="@Model.Client.Id" class="btn btn-primary">Link Contact</a>
+        </div>
+    </div>
+</div>

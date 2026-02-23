@@ -1,0 +1,34 @@
+@model ClientCore.Business.DTOs.CreateClientDTO
+
+@{
+    ViewData["Title"] = "Create Client";
+}
+
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header">
+            <h4>Create New Client</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <label asp-for="Name" class="form-label"></label>
+                        <input asp-for="Name" class="form-control"/>
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                   
+                </div>
+                
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <a asp-action="Index" class="btn btn-summary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
